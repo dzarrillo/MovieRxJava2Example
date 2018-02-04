@@ -1,13 +1,6 @@
 package com.dzartek.movierxjava2example.movie.service;
 
-import com.dzartek.movierxjava2example.movie.Movie;
-import com.dzartek.movierxjava2example.movie.pojomodel.Result;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dzartek.movierxjava2example.movie.pojomodel.Movies;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
@@ -25,8 +18,6 @@ public class MovieClient {
     private MovieService movieService;
 
     private MovieClient(){
-        final Gson gson =
-                new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         final Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(MOVIE_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
@@ -42,8 +33,8 @@ public class MovieClient {
         return instance;
     }
 
-    public io.reactivex.Observable<List<Movie>> getAllMovies(@NonNull String sort_by,
-                                                                       @NonNull String api_key){
+    public io.reactivex.Observable<Movies> getAllMovies(@NonNull String sort_by,
+                                                        @NonNull String api_key){
         return movieService.getMovies(sort_by, api_key);
     }
 
